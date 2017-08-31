@@ -1,7 +1,7 @@
 environments:
   base:
     environment_variables:
-      DEPLOYMENT: base
+      DEPLOYMENT: docker-base
     pipelines:
       - alpine-base
 pipelines:
@@ -25,8 +25,7 @@ pipelines:
     materials:
       mygit: # this is the name of material
         # keyword git says about type of material and url at once
-        git: http://my.example.org/mygit.git
-        branch: ci
+        git: https://github.com/rawmind0/alpine-base.git
       upstream:
         # type is optional here, material type is implied based on presence of pipeline and stage fields
         # type: dependency
@@ -50,7 +49,7 @@ pipelines:
                 report: test-reports/index.html
               tasks: # ordered list of tasks to execute in job csharp
                - fetch:
-                   pipeline: yamlpipe1
+                   pipeline: alpine-base
                    stage: build
                    job: build
                    source: test-bin/
