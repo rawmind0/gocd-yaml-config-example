@@ -22,18 +22,18 @@ pipelines:
                    destination: build_version
               tasks:
                 - exec: # indicates type of task
-                  command: echo 
-                  arguments:
-                    - $(cat version)-${GO_PIPELINE_COUNTER}
-                    - >
-                    - build_version
+                    command: echo 
+                    arguments:
+                      - $(cat version)-${GO_PIPELINE_COUNTER}
+                      - >
+                      - build_version
                 - exec: # indicates type of task
-                  command: docker 
-                  arguments: 
-                    - build 
-                    - -t 
-                    - rawmind/alpine-base:$(cat build_version) 
-                    - .
+                    command: docker 
+                    arguments: 
+                      - build 
+                      - -t 
+                      - rawmind/alpine-base:$(cat build_version) 
+                      - .
   alpine-tools: # definition of yaml-example pipeline
     group: docker-base
     label_template: "${mygit[:8]}"
