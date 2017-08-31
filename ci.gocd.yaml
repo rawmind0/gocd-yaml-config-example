@@ -2,6 +2,7 @@ environments:
   docker-base:
     environment_variables:
       DEPLOYMENT: docker-base
+      DOCKER_USER: rawmind
     pipelines:
       - alpine-base
       - alpine-tools
@@ -18,22 +19,31 @@ pipelines:
             build: # name of the job
               artifacts:
                 - build:
-                    source: build_version
-                    destination: build_version
+                    source: ci/build_version
+                    destination: ci/build_version
               tasks:
                 - exec: # indicates type of task
-                    command: echo 
+                    command: bash 
                     arguments:
-                      - $(cat version)-${GO_PIPELINE_COUNTER}
-                      - >
-                      - build_version
+                      - ci/build.sh
+      - test: # name of stage
+          jobs:
+            build: # name of the job
+              artifacts:
+                - build:
+                    source: ci/build_version
+                    destination: ci/build_version
+              tasks:
+                - fetch:
+                    pipeline: alpine-base
+                    stage: build
+                    job: build
+                    source: ci/build_version
+                    destination: ci/build_version
                 - exec: # indicates type of task
-                    command: docker 
-                    arguments: 
-                      - build 
-                      - -t 
-                      - rawmind/alpine-base:$(cat build_version) 
-                      - .
+                    command: bash 
+                    arguments:
+                      - ci/test.sh
   alpine-tools: # definition of yaml-example pipeline
     group: docker-base
     label_template: "${mygit[:8]}"
