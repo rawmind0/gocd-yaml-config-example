@@ -33,11 +33,13 @@ pipelines:
                 - build:
                     source: ci/build_version
                     destination: ci/build_version
+                    is_file: yes
               tasks:
                 - fetch:
                     pipeline: alpine-base
                     stage: build
                     job: build
+                    is_file: yes
                     source: ci/build_version
                     destination: ci/build_version
                 - exec: # indicates type of task
