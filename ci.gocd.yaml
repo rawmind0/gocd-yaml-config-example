@@ -16,9 +16,15 @@ pipelines:
       - build: # name of stage
           jobs:
             build: # name of the job
+              artifacts:
+               - build:
+                   source: build_version
+                   destination: build_version
               tasks:
-               - exec: # indicates type of task
-                   command: env
+                - exec: # indicates type of task
+                  command: echo $(cat version)-${GO_PIPELINE_COUNTER} > build_version
+                - exec: # indicates type of task
+                  command: docker build -t rawmind/alpine-base:$(cat build_version) .
   alpine-tools: # definition of yaml-example pipeline
     group: docker-base
     label_template: "${mygit[:8]}"
