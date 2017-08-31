@@ -18,14 +18,14 @@ pipelines:
               tasks:
                - exec: # indicates type of task
                    command: ls
-  "yaml-example": # definition of yaml-example pipeline
+  alpine-tools: # definition of yaml-example pipeline
     group: docker-base
     label_template: "${mygit[:8]}"
     locking: off
     materials:
       mygit: # this is the name of material
         # keyword git says about type of material and url at once
-        git: https://github.com/rawmind0/alpine-base.git
+        git: https://github.com/rawmind0/alpine-monit.git
       upstream:
         # type is optional here, material type is implied based on presence of pipeline and stage fields
         # type: dependency
