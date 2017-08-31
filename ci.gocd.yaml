@@ -17,9 +17,9 @@ pipelines:
           jobs:
             build: # name of the job
               artifacts:
-               - build:
-                   source: build_version
-                   destination: build_version
+                - build:
+                    source: build_version
+                    destination: build_version
               tasks:
                 - exec: # indicates type of task
                     command: echo 
