@@ -26,7 +26,7 @@ pipelines:
     materials:
       mygit: # this is the name of material
         # keyword git says about type of material and url at once
-        git: https://github.com/rawmind0/alpine-monit.git
+        git: https://github.com/rawmind0/alpine-tools.git
       upstream:
         # type is optional here, material type is implied based on presence of pipeline and stage fields
         # type: dependency
