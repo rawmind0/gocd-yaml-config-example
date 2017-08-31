@@ -20,7 +20,7 @@ pipelines:
               artifacts:
                 - build:
                     source: ci/build_version
-                    destination: ci/build_version
+                    destination: ci
               tasks:
                 - exec: # indicates type of task
                     command: bash 
@@ -33,7 +33,6 @@ pipelines:
                 - build:
                     source: ci/build_version
                     destination: ci
-                    is_file: yes
               tasks:
                 - fetch:
                     pipeline: alpine-base
