@@ -25,10 +25,7 @@ pipelines:
                 - exec: # indicates type of task
                     command: bash 
                     arguments:
-                      - "cd"
-                      - "ci"
-                      - "&&"
-                      - "./build.sh"
+                      - "ci/build.sh"
       - test: # name of stage
           jobs:
             build: # name of the job
@@ -46,10 +43,7 @@ pipelines:
                 - exec: # indicates type of task
                     command: bash 
                     arguments:
-                      - "cd"
-                      - "ci"
-                      - "&&"
-                      - "./test.sh"
+                      - "ci/test.sh"
   alpine-tools: # definition of yaml-example pipeline
     group: docker-base
     label_template: "${mygit[:8]}"
