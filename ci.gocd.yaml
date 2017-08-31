@@ -19,7 +19,7 @@ pipelines:
                - exec: # indicates type of task
                    command: ls
   "yaml-example": # definition of yaml-example pipeline
-    group: yaml-example
+    group: docker-base
     label_template: "${mygit[:8]}"
     locking: off
     materials:
@@ -30,7 +30,7 @@ pipelines:
       upstream:
         # type is optional here, material type is implied based on presence of pipeline and stage fields
         # type: dependency
-        pipeline: yamlpipe1
+        pipeline: alpine-base
         stage: build
     stages: # list of stages in order
       - build: # name of stage
