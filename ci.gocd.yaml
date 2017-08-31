@@ -1,9 +1,10 @@
 environments:
-  base:
+  docker-base:
     environment_variables:
       DEPLOYMENT: docker-base
     pipelines:
       - alpine-base
+      - alpine-tools
 pipelines:
   alpine-base:
     group: docker-base
@@ -17,7 +18,7 @@ pipelines:
             build: # name of the job
               tasks:
                - exec: # indicates type of task
-                   command: ls
+                   command: env
   alpine-tools: # definition of yaml-example pipeline
     group: docker-base
     label_template: "${mygit[:8]}"
