@@ -12,7 +12,7 @@ pipelines:
     materials:
       source:  # this is the name of material
         # says about type of material and url at once
-        git: https://github.com/rawmind0/alpine-base.git
+        git: https://x-access-token:${GITHUB_TOKEN}@github.com/rawmind0/alpine-base.git
     stages:
       - build: # name of stage
           fetch_materials: yes
@@ -93,7 +93,7 @@ pipelines:
     materials:
       mygit: # this is the name of material
         # keyword git says about type of material and url at once
-        git: https://github.com/rawmind0/alpine-tools.git
+        git: https://x-access-token:${GITHUB_TOKEN}@github.com/rawmind0/alpine-tools.git
       upstream:
         # type is optional here, material type is implied based on presence of pipeline and stage fields
         # type: dependency
