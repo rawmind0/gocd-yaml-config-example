@@ -18,7 +18,7 @@ pipelines:
       - build: # name of stage
           fetch_materials: yes
           keep_artifacts: no
-          clean_workspace: no
+          clean_workspace: yes
           jobs:
             build: # name of the job
               artifacts:
@@ -62,7 +62,7 @@ pipelines:
       - release: # name of stage
           fetch_materials: no
           keep_artifacts: no
-          clean_workspace: yes
+          clean_workspace: no
           jobs:
             release: # name of the job
               artifacts:
