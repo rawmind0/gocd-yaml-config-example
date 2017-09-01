@@ -90,8 +90,6 @@ pipelines:
                       - "ci/build_version"
   alpine-tools: # definition of yaml-example pipeline
     group: docker-base
-    label_template: "${mygit[:8]}"
-    locking: off
     materials:
       mygit: # this is the name of material
         # keyword git says about type of material and url at once
@@ -112,10 +110,14 @@ pipelines:
                 - build:
                     source: ci/build_version
                     destination: ci
-                - build:
-                    source: ci/docker_image
-                    destination: ci
               tasks:
+                - fetch:
+                    pipeline: alpine-base
+                    stage: release
+                    job: release
+                    is_file: yes
+                    source: ci/build_version
+                    destination: ci
                 - exec: # indicates type of task
                     command: bash 
                     arguments:
