@@ -15,30 +15,35 @@ pipelines:
         git: https://github.com/rawmind0/alpine-base.git
     stages:
       - build: # name of stage
+          fetch_materials: yes
+          keep_artifacts: no
+          clean_workspace: no
           jobs:
             build: # name of the job
-              tasks:
-                - exec: # indicates type of task
-                    command: bash 
-                    arguments:
-                      - "ci/build.sh"
-            test: # name of the job
               artifacts:
                 - build:
                     source: ci/build_version
+                    destination: ci
+                - image:
+                    source: ci/docker_image
                     destination: ci
               tasks:
                 - exec: # indicates type of task
                     command: bash 
                     arguments:
-                    - "ci/test.sh"
-                    - "ci/build_version"
-      - release: # name of stage
+                      - "ci/build.sh"
+      - test: # name of stage
+          fetch_materials: no
+          keep_artifacts: no
+          clean_workspace: no
           jobs:
             release: # name of the job
               artifacts:
                 - build:
                     source: ci/build_version
+                    destination: ci
+                - image:
+                    source: ci/docker_image
                     destination: ci
               tasks:
                 - fetch:
@@ -48,10 +53,18 @@ pipelines:
                     is_file: yes
                     source: ci/build_version
                     destination: ci
+                - fetch:
+                    pipeline: alpine-base
+                    stage: build
+                    job: build
+                    is_file: yes
+                    source: ci/docker_image
+                    destination: ci
                 - exec: # indicates type of task
                     command: bash 
                     arguments:
                       - "ci/test.sh"
+                      - "ci/build_version"
   alpine-tools: # definition of yaml-example pipeline
     group: docker-base
     label_template: "${mygit[:8]}"
