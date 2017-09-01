@@ -24,7 +24,7 @@ pipelines:
                 - build:
                     source: ci/build_version
                     destination: ci
-                - image:
+                - build:
                     source: ci/docker_image
                     destination: ci
               tasks:
