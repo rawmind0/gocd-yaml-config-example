@@ -89,7 +89,7 @@ pipelines:
                       - "remote" 
                       - "add" 
                       - "origin"
-                      - "https://x-access-token:${GITHUB_TOKEN}@github.com/rawmind0/alpine-base.git"
+                      - "https://x-access-token:${source}@github.com/rawmind0/alpine-base.git"
                 - exec: # indicates type of task
                     command: bash 
                     arguments:
