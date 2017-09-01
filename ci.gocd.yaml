@@ -16,19 +16,26 @@ pipelines:
     stages:
       - build: # name of stage
           jobs:
-            build: # name of the job
-              artifacts:
-                - build:
-                    source: ci/build_version
-                    destination: ci
-              tasks:
-                - exec: # indicates type of task
-                    command: bash 
-                    arguments:
-                      - "ci/build.sh"
-      - test: # name of stage
+            - build: # name of the job
+                tasks:
+                  - exec: # indicates type of task
+                      command: bash 
+                      arguments:
+                        - "ci/build.sh"
+            - test: # name of the job
+                artifacts:
+                  - build:
+                      source: ci/build_version
+                      destination: ci
+                tasks:
+                  - exec: # indicates type of task
+                      command: bash 
+                      arguments:
+                      - "ci/test.sh"
+                      - "ci/build_version"
+      - release: # name of stage
           jobs:
-            build: # name of the job
+            release: # name of the job
               artifacts:
                 - build:
                     source: ci/build_version
