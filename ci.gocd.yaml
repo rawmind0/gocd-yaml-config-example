@@ -62,7 +62,7 @@ pipelines:
       - release: # name of stage
           fetch_materials: no
           keep_artifacts: no
-          clean_workspace: no
+          clean_workspace: yes
           jobs:
             release: # name of the job
               artifacts:
