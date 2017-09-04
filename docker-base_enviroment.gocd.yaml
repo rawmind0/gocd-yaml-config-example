@@ -1,0 +1,9 @@
+environments:
+  docker-base:
+    environment_variables:
+      DEPLOYMENT: docker-base
+      DOCKER_USER: rawmind
+      REPO: ${source}
+    pipelines:
+      - alpine-base
+      - alpine-tools

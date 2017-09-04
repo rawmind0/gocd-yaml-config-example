@@ -1,12 +1,3 @@
-environments:
-  docker-base:
-    environment_variables:
-      DEPLOYMENT: docker-base
-      DOCKER_USER: rawmind
-      REPO: ${source}
-    pipelines:
-      - alpine-base
-      - alpine-tools
 pipelines:
   alpine-base:
     group: docker-base
@@ -89,37 +80,3 @@ pipelines:
                     arguments:
                       - "ci/release.sh"
                       - "ci/build_version"
-  alpine-tools: # definition of yaml-example pipeline
-    group: docker-base
-    materials:
-      mygit: # this is the name of material
-        # keyword git says about type of material and url at once
-        git: https://x-access-token:${source}@github.com/rawmind0/alpine-tools.git
-      upstream:
-        # type is optional here, material type is implied based on presence of pipeline and stage fields
-        # type: dependency
-        pipeline: alpine-base
-        stage: release
-    stages: # list of stages in order
-      - build: # name of stage
-          fetch_materials: yes
-          keep_artifacts: no
-          clean_workspace: no
-          jobs:
-            build: # name of the job
-              artifacts:
-                - build:
-                    source: ci/build_version
-                    destination: ci
-              tasks:
-                - fetch:
-                    pipeline: alpine-base
-                    stage: release
-                    job: release
-                    is_file: yes
-                    source: ci/build_version
-                    destination: ci
-                - exec: # indicates type of task
-                    command: bash 
-                    arguments:
-                      - "ci/build.sh"
