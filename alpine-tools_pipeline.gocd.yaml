@@ -5,6 +5,11 @@ pipelines:
       source:  # this is the name of material
         # says about type of material and url at once
         git: https://github.com/rawmind0/alpine-tools.git
+      myupstream:
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: alpine-base
+        stage: release
     stages:
       - build: # name of stage
           fetch_materials: yes
@@ -32,14 +37,14 @@ pipelines:
             test: # name of the job
               tasks:
                 - fetch:
-                    pipeline: alpine-base
+                    pipeline: alpine-tools
                     stage: build
                     job: build
                     is_file: yes
                     source: ci/build_version
                     destination: ci
                 - fetch:
-                    pipeline: alpine-base
+                    pipeline: alpine-tools
                     stage: build
                     job: build
                     is_file: yes
@@ -62,14 +67,14 @@ pipelines:
                     destination: ci
               tasks:
                 - fetch:
-                    pipeline: alpine-base
+                    pipeline: alpine-tools
                     stage: build
                     job: build
                     is_file: yes
                     source: ci/build_version
                     destination: ci
                 - fetch:
-                    pipeline: alpine-base
+                    pipeline: alpine-tools
                     stage: build
                     job: build
                     is_file: yes
