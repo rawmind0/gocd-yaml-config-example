@@ -35,6 +35,11 @@ pipelines:
                 - exec: # indicates type of task
                     command: bash 
                     arguments:
+                      - "./Dockerfile.template"
+                      - "ci/released_version"
+                - exec: # indicates type of task
+                    command: bash 
+                    arguments:
                       - "ci/build.sh"
       - test: # name of stage
           fetch_materials: no
