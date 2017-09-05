@@ -25,6 +25,13 @@ pipelines:
                     source: ci/docker_image
                     destination: ci
               tasks:
+                - fetch:
+                    pipeline: alpine-tools
+                    stage: build
+                    job: build
+                    is_file: yes
+                    source: ci/released_version
+                    destination: ci
                 - exec: # indicates type of task
                     command: bash 
                     arguments:
@@ -64,6 +71,9 @@ pipelines:
               artifacts:
                 - build:
                     source: ci/build_version
+                    destination: ci
+                - build:
+                    source: ci/released_version
                     destination: ci
               tasks:
                 - fetch:

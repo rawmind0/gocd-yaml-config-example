@@ -60,6 +60,9 @@ pipelines:
                 - build:
                     source: ci/build_version
                     destination: ci
+                - build:
+                    source: ci/released_version
+                    destination: ci
               tasks:
                 - fetch:
                     pipeline: alpine-base
