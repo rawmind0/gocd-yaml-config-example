@@ -27,8 +27,8 @@ pipelines:
               tasks:
                 - fetch:
                     pipeline: alpine-base
-                    stage: build
-                    job: build
+                    stage: release
+                    job: release
                     is_file: yes
                     source: ci/released_version
                     destination: ci
