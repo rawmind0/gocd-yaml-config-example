@@ -72,7 +72,7 @@ pipelines:
                 - build:
                     source: ci/build_version
                     destination: ci
-                - release:
+                - build:
                     source: ci/released_version
                     destination: ci
               tasks:
