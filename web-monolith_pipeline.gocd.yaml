@@ -1,0 +1,105 @@
+pipelines:
+  web-monolith:
+    group: web-monolith
+    materials:
+      source:  # this is the name of material
+        # says about type of material and url at once
+        git: https://github.com/rawmind0/web-monolith.git
+      myupstream:
+        # type is optional here, material type is implied based on presence of pipeline and stage fields
+        # type: dependency
+        pipeline: alpine-base
+        stage: release
+    stages:
+      - build: # name of stage
+          fetch_materials: yes
+          keep_artifacts: no
+          clean_workspace: yes
+          jobs:
+            build: # name of the job
+              artifacts:
+                - build:
+                    source: ci/build_version
+                    destination: ci
+                - build:
+                    source: ci/docker_image
+                    destination: ci
+              tasks:
+                - fetch:
+                    pipeline: alpine-base
+                    stage: release
+                    job: release
+                    is_file: yes
+                    source: ci/released_version
+                    destination: ci
+                - exec: # indicates type of task
+                    command: bash 
+                    arguments:
+                      - "./Dockerfile.template"
+                      - "ci/released_version"
+                - exec: # indicates type of task
+                    command: bash 
+                    arguments:
+                      - "ci/build.sh"
+      - test: # name of stage
+          fetch_materials: no
+          keep_artifacts: no
+          clean_workspace: no
+          jobs:
+            test: # name of the job
+              tasks:
+                - fetch:
+                    pipeline: web-monolith
+                    stage: build
+                    job: build
+                    is_file: yes
+                    source: ci/build_version
+                    destination: ci
+                - fetch:
+                    pipeline: web-monolith
+                    stage: build
+                    job: build
+                    is_file: yes
+                    source: ci/docker_image
+                    destination: ci
+                - exec: # indicates type of task
+                    command: bash 
+                    arguments:
+                      - "ci/test.sh"
+                      - "ci/build_version"
+      - release: # name of stage
+          fetch_materials: no
+          keep_artifacts: no
+          clean_workspace: no
+          jobs:
+            release: # name of the job
+              artifacts:
+                - build:
+                    source: ci/build_version
+                    destination: ci
+                - build:
+                    source: ci/released_version
+                    destination: ci
+                - build:
+                    source: Dockerfile
+                    destination: 
+              tasks:
+                - fetch:
+                    pipeline: web-monolith
+                    stage: build
+                    job: build
+                    is_file: yes
+                    source: ci/build_version
+                    destination: ci
+                - fetch:
+                    pipeline: web-monolith
+                    stage: build
+                    job: build
+                    is_file: yes
+                    source: ci/docker_image
+                    destination: ci
+                - exec: # indicates type of task
+                    command: bash 
+                    arguments:
+                      - "ci/release.sh"
+                      - "ci/build_version"
