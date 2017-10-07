@@ -6,3 +6,4 @@ environments:
     pipelines:
       - alpine-base
       - alpine-tools
+      - alpine-monit
