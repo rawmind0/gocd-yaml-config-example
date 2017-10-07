@@ -1,5 +1,5 @@
 pipelines:
-  alpine-tools:
+  alpine-monit:
     group: docker-base
     materials:
       source:  # this is the name of material
