@@ -63,6 +63,9 @@ pipelines:
                 - build:
                     source: ci/released_version
                     destination: ci
+                - build:
+                    source: Dockerfile
+                    destination: 
               tasks:
                 - fetch:
                     pipeline: alpine-base
