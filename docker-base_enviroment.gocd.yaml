@@ -7,5 +7,3 @@ environments:
       - alpine-base
       - alpine-tools
       - alpine-monit
-      - alpine-nginx
-      
