@@ -9,3 +9,6 @@ environments:
       - alpine-monit
       - alpine-nginx
       - web-monolith
+      - web-inventory
+      - web-payments
+      - web-shipping
