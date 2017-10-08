@@ -12,3 +12,4 @@ environments:
       - web-inventory
       - web-payments
       - web-shipping
+      - web-gateway
