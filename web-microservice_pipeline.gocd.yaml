@@ -67,4 +67,37 @@ pipelines:
                     export DOCKER_GATEWAY=$(cat gateway/released_version | cut -d"=" -f2)
                     ./docker-compose.yml.tmpl
                     ./rancher-compose.yml.tmpl
-
+      - deploy: # name of stage
+          fetch_materials: no
+          keep_artifacts: no
+          clean_workspace: no
+          approval:
+            type: manual
+            users:
+              - admin
+          jobs:
+            deploy: # name of the job
+              tasks:
+                - fetch:
+                    pipeline: web-microservice
+                    stage: release
+                    job: release
+                    is_file: yes
+                    source: docker-compose.yml
+                    destination: 
+                - fetch:
+                    pipeline: web-microservice
+                    stage: release
+                    job: release
+                    is_file: yes
+                    source: rancher-compose.yml
+                    destination: 
+                - script: |
+                    STACK_ID=$(rancher stack create ${GO_PIPELINE_NAME}-${GO_PIPELINE_LABEL})
+                    rancher wait ${STACK_ID}
+                    STACK_STATUS=$(rancher stack ls --format '{{.ID}}-{{.State}}' | grep ${STACK_ID} | cut -d- -f2)
+                    if [ "X${STACK_STATUS}" == "Xhealthy" ]; then
+                      exit 0
+                    else 
+                      exit 1
+                    fi
