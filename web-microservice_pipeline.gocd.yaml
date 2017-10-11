@@ -61,11 +61,11 @@ pipelines:
                     source: ci/released_version
                     destination: gateway
                 - script: | 
-                    DOCKER_SHIPPING=$(cat inventory/released_version | cut -d"=" -f2)
-                    DOCKER_PAYMENTS=$(cat payments/released_version | cut -d"=" -f2)
-                    DOCKER_INVENTORY=$(cat shipping/released_version | cut -d"=" -f2)
+                    export DOCKER_SHIPPING=$(cat inventory/released_version | cut -d"=" -f2)
+                    export DOCKER_PAYMENTS=$(cat payments/released_version | cut -d"=" -f2)
+                    export DOCKER_INVENTORY=$(cat shipping/released_version | cut -d"=" -f2)
                     DOCKER_GATEWAY=$(cat gateway/released_version | cut -d"=" -f2)
-                    DOCKER_GATEWAY=pp
+                    export DOCKER_GATEWAY=pp
                     ./docker-compose.yml.tmpl
                     ./rancher-compose.yml.tmpl
 
