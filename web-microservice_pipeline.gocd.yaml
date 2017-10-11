@@ -61,10 +61,11 @@ pipelines:
                     source: ci/released_version
                     destination: gateway
                 - script: | 
-                    echo inventory
-                    echo payments
-                    echo shipping
-                    echo gateway
+                    ls -la
+                    cat inventory
+                    cat payments
+                    cat shipping
+                    cat gateway
                     ./docker-compose.yml.tmpl
                     ./rancher-compose.yml.tmpl
 
