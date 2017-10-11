@@ -18,12 +18,12 @@ pipelines:
         pipeline: web-gateway
         stage: release
     stages:
-      - build: # name of stage
+      - release: # name of stage
           fetch_materials: yes
           keep_artifacts: no
           clean_workspace: yes
           jobs:
-            build: # name of the job
+            release: # name of the job
               artifacts:
                 - build:
                     source: docker-compose.yml
@@ -60,11 +60,11 @@ pipelines:
                     is_file: yes
                     source: ci/released_version
                     destination: gateway
-                - exec: # indicates type of task
-                    command: bash 
-                    arguments:
-                      - "docker-compose.yml.tmpl"
-                - exec: # indicates type of task
-                    command: bash 
-                    arguments:
-                      - "rancher-compose.yml.tmpl"
+                - script: | 
+                    echo inventory
+                    echo payments
+                    echo shipping
+                    echo gateway
+                    ./docker-compose.yml.tmpl
+                    ./rancher-compose.yml.tmpl
+
