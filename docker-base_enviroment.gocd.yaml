@@ -13,3 +13,4 @@ environments:
       - web-payments
       - web-shipping
       - web-gateway
+      - web-microservice
