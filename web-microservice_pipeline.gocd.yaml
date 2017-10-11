@@ -102,8 +102,9 @@ pipelines:
                 - script: |
                     STACK_ID=$(rancher stack create ${GO_PIPELINE_NAME}-${GO_PIPELINE_LABEL})
                     rancher wait ${STACK_ID}
+                    sleep 10
                     STACK_STATUS=$(rancher stack ls --format '{{.ID}}-{{.State}}' | grep ${STACK_ID} | cut -d- -f2)
-                    sleep 5
+                    echo ${STACK_STATUS}
                     if [ "X${STACK_STATUS}" == "Xhealthy" ]; then
                       exit 0
                     else 
