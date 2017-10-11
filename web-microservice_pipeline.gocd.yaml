@@ -77,6 +77,13 @@ pipelines:
               - admin
           jobs:
             deploy: # name of the job
+              artifacts:
+                - build:
+                    source: docker-compose.yml
+                    destination: 
+                - build:
+                    source: rancher-compose.yml
+                    destination: 
               tasks:
                 - fetch:
                     pipeline: web-microservice
@@ -96,6 +103,7 @@ pipelines:
                     STACK_ID=$(rancher stack create ${GO_PIPELINE_NAME}-${GO_PIPELINE_LABEL})
                     rancher wait ${STACK_ID}
                     STACK_STATUS=$(rancher stack ls --format '{{.ID}}-{{.State}}' | grep ${STACK_ID} | cut -d- -f2)
+                    sleep 5
                     if [ "X${STACK_STATUS}" == "Xhealthy" ]; then
                       exit 0
                     else 
